@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit"
 
 export interface Post {
     id: string
@@ -16,13 +16,28 @@ const postSlice = createSlice({
     name: 'posts',
     initialState,
     reducers: {
-        postAdded(state, action: PayloadAction<Post>){
+        postAdded:{
+          reducer(state, action: PayloadAction<Post>){
             state.push(action.payload);
+        },
+        prepare(title: string, content: string){
+            return{
+                payload:{id: nanoid(), title, content}
+            }
+        }
+        },
+        postUpdated(state, action: PayloadAction<Post>){
+            const {id, title, content} = action.payload;
+            const existingPost = state.find(post => post.id === id);
+            if(existingPost){
+                existingPost.title = title;
+                existingPost.content = content;
+            }
         }
     }
 })
 
 //export the auto-generated action creator with the same name: the createSlice does that!!:))
 //its like posts/postAdded
-export const {postAdded} = postSlice.actions;
+export const {postAdded, postUpdated} = postSlice.actions;
 export default postSlice.reducer
