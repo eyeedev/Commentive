@@ -8,7 +8,9 @@ export function PostsList(){
     //get posts data
     const posts = useAppSelector(selectAllPosts);
 
-    const renderedPosts = posts.map(post => (
+    const orderedPosts = posts.slice().sort((a, b) =>b.date.localeCompare(a.date));
+
+    const renderedPosts = orderedPosts.map(post => (
         <article className="post-excerpt" key={post.id}>
             <h3>
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
