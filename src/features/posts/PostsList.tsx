@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { selectAllPosts } from "./postsSlice";
 import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "@/components/TimeAgo";
+import { ReactionButtons } from "./ReactionButtons";
 
 export function PostsList(){
     //get posts data
@@ -20,6 +21,7 @@ export function PostsList(){
             <p className="post-content">
                 {post.content.substring(0, 100)}
             </p>
+            <ReactionButtons post={post} />
         </article>
     ))
 
