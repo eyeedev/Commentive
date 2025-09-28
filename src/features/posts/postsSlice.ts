@@ -2,6 +2,7 @@ import { RootState } from './../../app/store'
 import { useAppSelector } from '@/app/hooks'
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 import { sub } from 'date-fns'
+import { userLoggedOut } from '../auth/authSlice'
 
 export interface Reactions {
     thumbsUp: number
@@ -91,6 +92,11 @@ const postSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(userLoggedOut, (state) => {
+      return [];
+    })
+  }
 })
 
 //export the auto-generated action creator with the same name: the createSlice does that!!:))
