@@ -1,33 +1,41 @@
-import { useAppSelector } from "@/app/hooks";
-import { Link, useParams } from "react-router-dom"
-import { selectPostById } from "./postsSlice";
-import { PostAuthor } from "./PostAuthor";
-import { TimeAgo } from "@/components/TimeAgo";
-import { ReactionButtons } from "./ReactionButtons";
+import { useAppSelector } from '@/app/hooks'
+import { Link, useParams } from 'react-router-dom'
+import { selectPostById } from './postsSlice'
+import { PostAuthor } from './PostAuthor'
+import { TimeAgo } from '@/components/TimeAgo'
+import { ReactionButtons } from './ReactionButtons'
+import { selectCurrentUsername } from '../auth/authSlice'
 
-export function SinglePostPage(){
-    const {postId} = useParams();
+export function SinglePostPage() {
+  const { postId } = useParams()
 
-    const post = useAppSelector(state => selectPostById(state, postId!))
-    if(!post){
-        return(
-            <section>
-                <h2>Post Not Found!</h2>
-            </section>
-        ) 
-    }
-    return(
-        <section>
-            <article className="post">
-                <h2>{post.title}</h2>
-                <PostAuthor userId={post.user} />
-                <TimeAgo timestamp={post.date} />
-                <p className="post-content">{post.content}</p>
-                <ReactionButtons post={post} />
-                <Link to={`/editPost/${post.id}`} className="button">
-                     Edit Post
-                </Link>
-            </article>
-        </section>
+  const post = useAppSelector((state) => selectPostById(state, postId!))
+  const currentUsername = useAppSelector(selectCurrentUsername)!
+
+  if (!post) {
+    return (
+      <section>
+        <h2>Post Not Found!</h2>
+      </section>
     )
+  }
+
+  const canEdit = currentUsername === post.user
+
+  return (
+    <section>
+      <article className="post">
+        <h2>{post.title}</h2>
+        <PostAuthor userId={post.user} />
+        <TimeAgo timestamp={post.date} />
+        <p className="post-content">{post.content}</p>
+        <ReactionButtons post={post} />
+        {canEdit && (
+          <Link to={`/editPost/${post.id}`} className="button">
+            Edit Post
+          </Link>
+        )}
+      </article>
+    </section>
+  )
 }
