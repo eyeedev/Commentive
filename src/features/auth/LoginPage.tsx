@@ -31,15 +31,17 @@ export function LoginPage() {
   }
 
   return (
-    <section>
-      <h2>Welcome to Commentive!</h2>
-      <h3>Please Log in:</h3>
-      <form onSubmit={handleSubmit}>
+    <section className='login-page'>
+      <h2 className='title'>Welcome to Commentive!</h2>
+      <form onSubmit={handleSubmit} className='login-card'>
+        <h3>Please Log in:</h3>
+        <div>
         <label htmlFor="username">User:</label>
         <select id="username" name="username" required>
           <option value="">Select a user</option>
           {usersOptions}
         </select>
+        </div>
         <button>Log In</button>
       </form>
     </section>

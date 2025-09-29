@@ -31,7 +31,7 @@ export function AddPostForm() {
 
   return (
     <section>
-      <h2>Ad a new Post</h2>
+      <h2>Add a new Post</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="postTitle">Post Title:</label>
         <input type="text" id="postTitle" defaultValue="" required />
